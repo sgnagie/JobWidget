@@ -1,0 +1,6 @@
+bin/
+obj/
+installer/Output/
+
+# Contains real API keys — never commit
+config.json

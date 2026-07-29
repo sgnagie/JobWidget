@@ -1,0 +1,24 @@
+{
+  "searchKeywords": "software engineer",
+  "searchLocation": "Louisville, KY",
+  "salaryMin": null,
+  "workMode": "Remote",
+  "refreshIntervalMinutes": 10,
+  "autoRefreshEnabled": true,
+  "adzuna": {
+    "enabled": true,
+    "appId": "YOUR_ADZUNA_APP_ID",
+    "appKey": "YOUR_ADZUNA_APP_KEY"
+  },
+  "remotive": {
+    "enabled": true
+  },
+  "jooble": {
+    "enabled": false,
+    "apiKey": "YOUR_JOOBLE_API_KEY"
+  },
+  "enabledSources": [
+    "adzuna",
+    "remotive"
+  ]
+}
