@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <ImplicitUsings>enable</ImplicitUsings>
-    <ApplicationIcon></ApplicationIcon>
+    <ApplicationIcon>Assets\app.ico</ApplicationIcon>
     <AssemblyName>JobWidget</AssemblyName>
     <RootNamespace>JobWidget</RootNamespace>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
@@ -15,5 +15,9 @@
     <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
     <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Resource Include="assets\app.ico" />
+  </ItemGroup>
 
 </Project>
