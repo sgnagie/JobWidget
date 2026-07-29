@@ -2,6 +2,7 @@
 
 A small always-on-top, borderless desktop widget that shows a scrolling list of
 job postings (title + location), auto-refreshing on a timer.
+Currently pulls from Adzura, Jooble and Remotive.  
 
 ## 1. Install the .NET SDK
 
