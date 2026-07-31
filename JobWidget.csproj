@@ -16,8 +16,11 @@
     <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Resource Include="assets\app.ico" />
-  </ItemGroup>
+<ItemGroup>
+  <Compile Remove="JobWidget.Tests\**" />
+  <EmbeddedResource Remove="JobWidget.Tests\**" />
+  <None Remove="JobWidget.Tests\**" />
+  <Page Remove="JobWidget.Tests\**" />
+</ItemGroup>
 
 </Project>

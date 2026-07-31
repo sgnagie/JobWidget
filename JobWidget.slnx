@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="JobWidget.csproj" />
+  <Project Path="JobWidget.Tests/JobWidget.Tests.csproj" />
+</Solution>
