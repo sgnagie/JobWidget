@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using JobWidget.Models;
+using System.Globalization;
 
 namespace JobWidget.Services
 {
@@ -11,17 +12,23 @@ namespace JobWidget.Services
     /// </summary>
     public class AdzunaJobSource : IJobSource
     {
-        private readonly HttpClient _httpClient = new();
+private readonly HttpClient _httpClient;
         private readonly ConfigService _configService;
+        private readonly TimeSpan _retryDelay;
 
         private const string Country = "us";
 
         public string Name => "Adzuna";
         public bool IsEnabled => _configService.Config.Adzuna.Enabled;
 
-        public AdzunaJobSource(ConfigService configService)
+        public AdzunaJobSource(
+            ConfigService configService,
+            HttpClient? httpClient = null,
+            TimeSpan? retryDelay = null)
         {
             _configService = configService;
+            _httpClient = httpClient ?? new HttpClient();
+            _retryDelay = retryDelay ?? TimeSpan.FromSeconds(5);
         }
 
         public async Task<List<JobPosting>> FetchJobsAsync(
@@ -69,7 +76,7 @@ namespace JobWidget.Services
             }
 
             const int maxAttempts = 3;
-            var retryDelay = TimeSpan.FromSeconds(5);
+            var retryDelay = _retryDelay;
 
             for (var attempt = 1; attempt <= maxAttempts; attempt++)
             {
@@ -175,8 +182,34 @@ namespace JobWidget.Services
             if (value is long longVal)
                 return (int)longVal;
 
-            if (int.TryParse(value.ToString(), out var result))
-                return result;
+            // System.Text.Json deserializes `object` into a JsonElement,
+            // so this is the path real API responses actually take.
+            if (value is JsonElement element)
+            {
+                if (element.ValueKind == JsonValueKind.Number
+                    && element.TryGetDouble(out var number))
+                {
+                    return (int)Math.Round(number);
+                }
+
+                if (element.ValueKind == JsonValueKind.String)
+                {
+                    value = element.GetString();
+                }
+                else
+                {
+                    return null;
+                }
+            }
+
+            if (double.TryParse(
+                    value?.ToString(),
+                    NumberStyles.Any,
+                    CultureInfo.InvariantCulture,
+                    out var parsed))
+            {
+                return (int)Math.Round(parsed);
+            }
 
             return null;
         }
